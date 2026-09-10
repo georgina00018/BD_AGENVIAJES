@@ -29,6 +29,7 @@ CREATE TABLE IF NOT EXISTS `cliente` (
   `email` varchar(100) NOT NULL,
   `direccion` varchar(150) NOT NULL,
   `fecha_alta` date NOT NULL,
+  `activo` tinyint(1) NOT NULL,
   PRIMARY KEY (`id_cliente`),
   UNIQUE KEY `unique` (`DNI`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -41,6 +42,7 @@ CREATE TABLE IF NOT EXISTS `destino` (
   `ciudad` varchar(100) NOT NULL DEFAULT '',
   `pais` varchar(100) NOT NULL DEFAULT '',
   `descripcion` varchar(200) NOT NULL DEFAULT '',
+  `activo` tinyint(1) NOT NULL,
   PRIMARY KEY (`id_destino`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -54,6 +56,7 @@ CREATE TABLE IF NOT EXISTS `pago` (
   `monto` decimal(10,2) NOT NULL,
   `metodo_pago` varchar(30) NOT NULL DEFAULT '',
   `comprobante` varchar(100) NOT NULL DEFAULT '',
+  `actividad` tinyint(1) NOT NULL,
   PRIMARY KEY (`id_pago`),
   KEY `FK_pago_reserva` (`id_reserva`),
   CONSTRAINT `FK_pago_reserva` FOREIGN KEY (`id_reserva`) REFERENCES `reserva` (`id_reserva`)
@@ -69,6 +72,7 @@ CREATE TABLE IF NOT EXISTS `reserva` (
   `fecha_reserva` date NOT NULL,
   `cantidad_personan` int NOT NULL DEFAULT (0),
   `estado` varchar(20) NOT NULL DEFAULT '0',
+  `activo` tinyint(1) NOT NULL,
   PRIMARY KEY (`id_reserva`),
   KEY `FK_reserva_cliente` (`id_cliente`),
   KEY `FK_reserva_viaje` (`id_viaje`),
@@ -86,6 +90,7 @@ CREATE TABLE IF NOT EXISTS `viaje` (
   `precio` decimal(10,2) NOT NULL DEFAULT (0),
   `cupos` int NOT NULL DEFAULT (0),
   `descripcion` varchar(200) NOT NULL DEFAULT '0',
+  `activo` tinyint(1) NOT NULL,
   PRIMARY KEY (`id_viaje`),
   KEY `FK_viaje_destino` (`id_destino`),
   CONSTRAINT `FK_viaje_destino` FOREIGN KEY (`id_destino`) REFERENCES `destino` (`id_destino`)
